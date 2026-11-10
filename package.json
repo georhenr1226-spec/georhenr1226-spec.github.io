@@ -1,0 +1,1 @@
+{"name":"chapter-11-atlas","private":true,"type":"module","scripts":{"snapshot":"node scripts/snapshot.mjs","test":"node --test"},"engines":{"node":">=22"}}
