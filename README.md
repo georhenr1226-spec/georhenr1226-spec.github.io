@@ -21,3 +21,9 @@ The serverless endpoint collects public metadata on visits, with a six-hour Verc
 - Push to main to deploy to Vercel automatically.
 
 Never commit secrets. CSV exports include source URLs and collection times and protect names against spreadsheet formula execution.
+
+## Reviewed industry enrichment
+
+The current review batch adds 260 classifications: 3 debtor-specific SEC SIC mappings (high editorial confidence) and 257 documented corporate-group mappings (medium). Group industries describe the group, not the standalone legal debtor. The public review register in data/industry-reviews.json records exact docket ID, expected name/date/court, evidence sources, method and review date. Changed identities are not enriched. Newly provided source labels supersede group inferences. Collection refreshes reapply the reviewed mappings; new companies are not automatically researched.
+
+The Industry view control supports enhanced labels, debtor evidence plus original labels, and original source labels. All charts and CSV exports follow the selected view. Every row retains its original source industry. Expand the classification evidence in a row to inspect its basis. Source classifications outside this review batch remain unreviewed.
