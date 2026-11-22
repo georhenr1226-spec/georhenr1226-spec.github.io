@@ -8,7 +8,7 @@ const YES=[['yes','Yes'],['no','No'],['unsure','I’m not sure']];
 const PROFILE=[['individual','Myself','Personal debts and finances.'],['joint','Myself and my spouse','Explore a possible joint individual filing.'],['sole','My sole proprietorship','A business I own without a separate legal entity.'],['llc','An LLC or corporation','A separately organized business entity.'],['partnership','A partnership','A business organized as a partnership.'],['nonprofit','A nonprofit organization','A separately organized nonprofit entity.'],['special','A specialized situation','A municipality, regulated financial entity or cross-border matter.']];
 const DEBT_TYPES=[['credit','Credit cards or personal loans'],['medical','Medical bills'],['secured','Mortgage, vehicle or other secured loans'],['business','Business or vendor obligations'],['tax','Tax obligations'],['support','Child support or alimony'],['student','Education loans'],['fines','Court fines or restitution'],['unsure','I’m not sure']];
 const URGENCY=[['foreclosure','Foreclosure or a scheduled property sale'],['repossession','Vehicle or equipment repossession'],['garnishment','Wage garnishment or a frozen account'],['lawsuit','A lawsuit, judgment or court deadline'],['business','Business shutdown, payroll or critical supplier pressure'],['none','None of these right now'],['unsure','I’m not sure']];
-let answers={},current=0,maxVisited=0,editing=false,finished=false,view='landing';
+let answers={},current=0,maxVisited=0,editing=false,finished=false,view='landing',primaryInView=true;
 const checked=(k,v)=>Array.isArray(answers[k])?answers[k].includes(v):answers[k]===v;
 function choices(name,title,options,{multi=false,help='',one=false,compact=false}={}){
  return `<fieldset class="field-group" data-field="${name}"><legend>${title}${help?`<span class="field-help">${help}</span>`:''}</legend><div class="choices ${one?'one-column':''} ${compact?'compact':''}">${options.map(([value,label,detail])=>`<label class="choice"><input type="${multi?'checkbox':'radio'}" name="${name}" value="${esc(value)}" ${checked(name,value)?'checked':''}><span><strong>${label}</strong>${detail?`<small>${detail}</small>`:''}</span>${detail?'<span class="choice-arrow" aria-hidden="true">↗</span>':''}</label>`).join('')}</div></fieldset>`;
@@ -47,7 +47,7 @@ function pretty(key,value){
 }
 function applicableFields(i){return FIELDS[i].filter(k=>!(k==='specialKind'&&answers.profile!=='special')&&!(['guarantee','singleProperty'].includes(k)&&!hasBusiness(answers))&&!(['household','averageIncome','counseling'].includes(k)&&!isPerson(answers)));}
 function reviewHTML(editable){return FIELDS.map((_,i)=>`<section class="review-block"><div class="review-block-head"><h3>${i+1}. ${STEPS[i]}</h3>${editable?`<button type="button" data-edit="${i}" aria-label="Edit ${STEPS[i]}">Edit ↗</button>`:''}</div><dl class="review-items">${applicableFields(i).map(k=>`<div><dt>${esc(FIELD_LABELS[k])}</dt><dd>${esc(pretty(k,answers[k]))}</dd></div>`).join('')}</dl></section>`).join('');}
-function showView(next){view=next;for(const id of ['landing','intake','results'])$(id).hidden=id!==next;}
+function showView(next){view=next;for(const id of ['landing','intake','results'])$(id).hidden=id!==next;syncFloatingSurvey();}
 function focusHeading(){requestAnimationFrame(()=>{const heading=view==='intake'?$('question-title'):$('result-title');heading?.focus({preventScroll:true});(view==='intake'?$('intake'):$('results')).scrollIntoView({behavior:'instant',block:'start'});});}
 function renderStep(){
  showView('intake');const [title,intro,html]=stepContent();
@@ -120,3 +120,7 @@ let theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'ligh
 function setTheme(value){theme=value;document.documentElement.dataset.theme=value;document.querySelector('meta[name="theme-color"]').content=value==='dark'?'#0b1715':'#f6f5ef';document.querySelectorAll('[data-theme-value]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.themeValue===value)));}
 document.querySelectorAll('[data-theme-value]').forEach(button=>button.addEventListener('click',()=>setTheme(button.dataset.themeValue)));
 setTheme(theme);
+
+function syncFloatingSurvey(){const visible=view==='landing'&&!primaryInView;$('floating-survey').hidden=!visible;document.body.classList.toggle('has-floating-survey',visible);}
+const mainSurveyButton=document.querySelector('.hero-actions [data-start]');
+if('IntersectionObserver' in window){const surveyObserver=new IntersectionObserver(entries=>{primaryInView=entries[0].isIntersecting&&entries[0].intersectionRatio>=0.5;syncFloatingSurvey();},{threshold:[0,0.5,1]});surveyObserver.observe(mainSurveyButton);}else{primaryInView=false;syncFloatingSurvey();}
