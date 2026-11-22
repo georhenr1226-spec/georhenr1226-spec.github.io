@@ -4,3 +4,6 @@ html[data-theme=dark]{color-scheme:dark;--paper:#0b1715;--white:#13241f;--ink:#e
 @media(max-width:800px){.site-header nav{display:none}.site-header{gap:15px}}
 @media(max-width:620px){.site-header{display:grid;grid-template-columns:1fr auto;gap:8px 10px;height:auto;min-height:100px;padding-top:16px;padding-bottom:12px}.site-header .brand{font-size:25px;gap:10px}.site-header .brand-caption{font-size:6px;letter-spacing:1.5px}.theme-switch button{padding:6px 8px;font-size:9px!important}.header-contact{grid-column:1/-1;justify-self:end;margin-top:-2px;font-size:9px}.theme-switch{gap:1px;padding:3px}}
 @media print{.theme-switch{display:none!important}html[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#000;--muted:#333;--line:#aaa}html[data-theme=dark] .result-intro h1,html[data-theme=dark] .budget-line strong,html[data-theme=dark] .review-items dd{color:#000!important}html[data-theme=dark] .review-block,html[data-theme=dark] .budget-line{background:#fff!important;color:#000!important}html[data-theme=dark] .route-status{background:#fff;color:#000;border-color:#999}}
+
+html[data-theme=dark] .hero,html[data-theme=dark] .wizard-sidebar,html[data-theme=dark] .result-focus{color:#f0f3e7}html[data-theme=dark] .journey-second{background:#dce5ce;color:#1b321d}
+
