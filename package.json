@@ -1,1 +1,1 @@
-{"name":"chapter-11-atlas","private":true,"type":"module","scripts":{"snapshot":"node scripts/snapshot.mjs","test":"node --test"},"engines":{"node":">=22"}}
+{"name":"clearpath-bankruptcy-intake","private":true,"type":"module","scripts":{"test":"node --test intake/screening.test.js","check":"node --check intake/app.js && node --check intake/screening.js"},"engines":{"node":">=22"}}

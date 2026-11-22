@@ -1,29 +1,23 @@
-# Chapter 11 Atlas
+# Clearpath — Bankruptcy intake & screening
 
-Live: https://my-first-website-mu-two.vercel.app/
+Live site: https://my-first-website-mu-two.vercel.app/
 
-Interactive 2026 US Chapter 11 filing monitor. Filter by industry, month, court and debtor name. Select chart bars or heatmap cells, browse source-linked dockets and export filtered CSV data.
+A responsive, private, survey-style educational bankruptcy intake for individuals, joint filers, sole proprietors, separate business entities and specialist matters. Replaces the former Chapter 11 Atlas dashboard; the earlier dashboard remains recoverable from Git history.
 
-## Data and limits
+## Experience
 
-Metadata source: [Startup Stumbles — Chapter 11 Watch](https://startupstumbles.com/chapter-11-watch/), which links individual records to public CourtListener dockets. Selected-district coverage, **not a nationwide census**. Records are debtor dockets, not unique restructurings. Affiliates count separately. Source industry labels are retained; Other is displayed as Unclassified, without guessing. Labels and underlying records have not all been independently verified.
+Ten stages cover identity/type, jurisdiction, priorities, debts, income, assets, urgency, special circumstances, history and review. Results provide chapter discussion priorities, explain uncertainty, flag urgent issues and generate a text or printable attorney consultation summary. Individual and entity routes are distinct. The chapter comparison covers 7, 11, 12 and 13, and flags municipal, regulated and cross-border cases for specialist review.
 
-Only Chapter 11 filing dates in 2026 through the collection date are included. Chapter 15, future dates and duplicate docket IDs are excluded. The latest month is partial. Missing records do not imply no filings.
+This tool does not determine legal qualification, calculate a statutory means test, establish exemptions, apply all current debt ceilings, choose whether someone should file, prepare a petition or provide legal representation. Screening rules and official reference sources live in `intake/screening.js`. Reviewed November 22, 2026; laws and filing-date limits require ongoing review.
 
-The serverless endpoint collects public metadata on visits, with a six-hour Vercel edge cache. No paid data provider, PACER login, background scheduled job or document storage. If collection fails, the UI identifies the dated bundled snapshot. Refresh does not bypass the shared cache. Unexpectedly small results are rejected to avoid presenting a broken source as zero filings.
+## Privacy and handoff
 
-## Maintenance
+Answers remain in module memory in the current tab only. No analytics, remote fonts, intake API, cookies, localStorage, sessionStorage or answer-bearing URLs. No names, SSNs, account identifiers, email or uploads are requested. Downloads and printing happen only at the visitor's request. Ordinary hosting access logs may still exist. Reloading or leaving clears the intake; Clear answers also removes the rendered answer DOM.
 
-- Preview using any static server; without the API, the page uses the dated snapshot.
-- For full local preview, use Vercel CLI with Node 22 or later.
-- Run `npm test` for chapter/date filters, deduplication, entity decoding, industry mapping and failure safeguards.
-- Run `npm run snapshot` to update the saved public dataset. Review counts before committing.
-- Push to main to deploy to Vercel automatically.
+The attorney handoff links to the ABA's attorney resources and LSC's civil legal-aid locator. No law firm destination was provided. Nothing is automatically sent or booked; visitors choose an attorney and how to share their own summary. To connect a particular firm later, obtain its verified destination and define consent and secure handling before adding data transmission or retention.
 
-Never commit secrets. CSV exports include source URLs and collection times and protect names against spreadsheet formula execution.
+## Development
 
-## Reviewed industry enrichment
+Static HTML/CSS/JavaScript; no runtime packages or build step. Serve this folder with a static server. `npm test` runs the screening tests. `npm run check` checks JavaScript syntax. Push main to the existing GitHub repository to trigger Vercel deployment.
 
-The current review batch adds 260 classifications: 3 debtor-specific SEC SIC mappings (high editorial confidence) and 257 documented corporate-group mappings (medium). Group industries describe the group, not the standalone legal debtor. The public review register in data/industry-reviews.json records exact docket ID, expected name/date/court, evidence sources, method and review date. Changed identities are not enriched. Newly provided source labels supersede group inferences. Collection refreshes reapply the reviewed mappings; new companies are not automatically researched.
-
-The Industry view control supports enhanced labels, debtor evidence plus original labels, and original source labels. All charts and CSV exports follow the selected view. Every row retains its original source industry. Expand the classification evidence in a row to inspect its basis. Source classifications outside this review batch remain unreviewed.
+Do not add sensitive intake logging, email submissions or third-party tracking without deliberately revising the privacy design and visitor disclosures. No credentials belong in this repository.
