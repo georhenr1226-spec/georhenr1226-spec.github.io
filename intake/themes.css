@@ -17,3 +17,19 @@ html[data-theme=dark] .hero,html[data-theme=dark] .wizard-sidebar,html[data-them
 }
 @media screen and (max-width:1000px){.wizard-main{padding:32px 26px}.question-title{font-size:36px}.choices{grid-template-columns:1fr}.input-grid{gap:16px}}
 @media screen and (max-width:620px){.wizard-main{padding:28px 20px}.question-title{font-size:34px;letter-spacing:-.6px;line-height:1.2}.question-intro{font-size:16px;line-height:1.8;margin:16px 0 27px}.question-overline{font-size:10px;line-height:1.7}.field-group legend,.input-label,.input-wrap .input-label{font-size:17px;line-height:1.55}.field-help{font-size:14px;line-height:1.75}.choice{padding:18px 16px;min-height:78px;gap:13px}.choice strong{font-size:18px;line-height:1.5}.choice small{font-size:15px;line-height:1.65}.choice-arrow{display:none}.choices,.choices.compact{grid-template-columns:1fr;gap:13px}.input-grid{grid-template-columns:1fr;gap:0}.input-wrap input,.input-wrap select{font-size:18px;min-height:58px}.question-callout{font-size:14px;padding:17px;line-height:1.8}.progress-top{font-size:12px}.wizard-sidebar .step-link{padding:0}.wizard-sidebar .step-link .step-circle{width:22px;height:22px;font-size:9px}.form-actions{gap:12px}.form-actions .button{font-size:15px;min-height:58px;padding:15px 12px;gap:10px}.form-bottom-note{font-size:12px;line-height:1.75}.review-items{grid-template-columns:1fr;gap:13px}.review-items dt{font-size:13px}.review-items dd{font-size:16px}.review-block{padding:19px}.review-block h3{font-size:16px}.acknowledge{font-size:14px;line-height:1.8}.intake-topline .text-button{font-size:12px!important}.optional{font-size:12px}}
+/* Survey navigation remains available without covering the final answer. */
+@media screen{
+#intake .form-actions{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:stretch;justify-content:center;gap:22px;margin:0;padding:16px 5% calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--paper);box-shadow:0 -6px 30px #0002}
+#intake .form-actions .button{flex:0 1 280px;min-height:60px;font-size:16px}
+#intake .wizard-main{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+#intake input,#intake select,#intake .field-group,#intake .acknowledge{scroll-margin-bottom:150px}
+html:has(#intake:not([hidden])){scroll-padding-bottom:150px}
+body:has(#intake:not([hidden])) .site-footer{margin-bottom:calc(105px + env(safe-area-inset-bottom,0px))}
+}
+@media screen and (max-width:620px){
+#intake .form-actions{gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+#intake .form-actions .button{min-width:0;min-height:62px;padding:15px 12px;font-size:15px;gap:10px}
+#intake .form-actions #back{flex:1}
+#intake .form-actions #continue{flex:1.45}
+#intake .wizard-main{padding-bottom:calc(165px + env(safe-area-inset-bottom,0px))}
+}
