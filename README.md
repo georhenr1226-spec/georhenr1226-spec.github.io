@@ -1,4 +1,4 @@
-# Clearpath — Bankruptcy intake & screening
+# Clearpath Bankruptcy Intake Tool
 
 Live site: https://my-first-website-mu-two.vercel.app/
 
@@ -21,3 +21,5 @@ The attorney handoff links to the ABA's attorney resources and LSC's civil legal
 Static HTML/CSS/JavaScript; no runtime packages or build step. Serve this folder with a static server. `npm test` runs the screening tests. `npm run check` checks JavaScript syntax. Push main to the existing GitHub repository to trigger Vercel deployment.
 
 Do not add sensitive intake logging, email submissions or third-party tracking without deliberately revising the privacy design and visitor disclosures. No credentials belong in this repository.
+
+Appearance: Light and Dark buttons in the header switch the entire interface. Initial appearance follows the device preference. The setting is kept in memory only, without storing intake answers or appearance preferences. Printing remains light.
